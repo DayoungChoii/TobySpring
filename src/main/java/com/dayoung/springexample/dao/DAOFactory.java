@@ -10,7 +10,9 @@ import java.sql.Connection;
 public class DAOFactory {
     @Bean
     public UserDao userDao(){
-        return new UserDao(connectionMaker());
+        UserDao userDao = new UserDao();
+        userDao.setConnectionMaker(connectionMaker());
+        return userDao;
     }
 
     @Bean
