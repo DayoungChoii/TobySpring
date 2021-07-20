@@ -2,19 +2,20 @@ package com.dayoung.springexample.dao;
 
 import com.dayoung.springexample.bean.User;
 
+import javax.sql.DataSource;
 import java.sql.*;
 
 public class UserDao {
 
-    private ConnectionMaker connectionMaker;
+    private DataSource dataSource;
 
-    public void setConnectionMaker(ConnectionMaker connectionMaker){
-        this.connectionMaker = connectionMaker;
+    public void setDataSource(DataSource dataSource){
+        this.dataSource = dataSource;
     }
 
-    public void add(User user) throws ClassNotFoundException, SQLException {
+    public void add(User user) throws SQLException {
 
-        Connection c = connectionMaker.makeConnection();
+        Connection c = dataSource.getConnection();
 
         PreparedStatement ps = c.prepareStatement(
                 "insert into org_employee(EMP_NO, USER_NAME) values(?,?)");
@@ -31,7 +32,7 @@ public class UserDao {
 
     public User get(String empNo) throws ClassNotFoundException, SQLException {
 
-        Connection c = connectionMaker.makeConnection();
+        Connection c = dataSource.getConnection();
 
         PreparedStatement ps = c.prepareStatement(
                 "select * from org_employee where user_name = ?");
