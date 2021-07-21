@@ -1,7 +1,7 @@
 package com.dayoung.springexample.test;
 
-import com.dayoung.springexample.dao.CountingConnectionMaker;
-import com.dayoung.springexample.dao.CountingDaoFactory;
+import com.dayoung.springexample.service.CountingConnectionMaker;
+import com.dayoung.springexample.service.CountingDaoFactory;
 import com.dayoung.springexample.dao.UserDao;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

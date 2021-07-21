@@ -1,7 +1,6 @@
 package com.dayoung.springexample.test;
 
-import com.dayoung.springexample.bean.User;
-import com.dayoung.springexample.dao.DAOFactory;
+import com.dayoung.springexample.service.DAOFactory;
 import com.dayoung.springexample.dao.UserDao;
 
 import java.sql.SQLException;

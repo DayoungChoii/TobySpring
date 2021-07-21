@@ -1,9 +1,9 @@
-package com.dayoung.springexample.dao;
+package com.dayoung.springexample.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class CountingConnectionMaker implements ConnectionMaker{
+public class CountingConnectionMaker implements ConnectionMaker {
     int counter = 0;
     private ConnectionMaker realConnectionMaker;
 

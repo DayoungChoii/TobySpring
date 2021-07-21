@@ -1,4 +1,4 @@
-package com.dayoung.springexample.dao;
+package com.dayoung.springexample.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
