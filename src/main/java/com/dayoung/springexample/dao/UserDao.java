@@ -35,8 +35,8 @@ public class UserDao {
         Connection c = dataSource.getConnection();
 
         PreparedStatement ps = c.prepareStatement(
-                "select * from org_employee where user_name = ?");
-        ps.setString(1, "최주영");
+                "select * from org_employee where emp_no = ?");
+        ps.setString(1, empNo);
 
 
         ResultSet rs = ps.executeQuery();
