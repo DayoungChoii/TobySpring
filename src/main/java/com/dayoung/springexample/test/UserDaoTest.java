@@ -21,15 +21,23 @@ public class UserDaoTest {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         UserDao dao = context.getBean("userDao", UserDao.class);
 
+        dao.deleteAll();
+        assertThat(dao.getCount(), is(0));
+
         User user = new User();
         user.setEmpNo("11111");
         user.setUserName("김연경");
 
         dao.add(user);
 
+        assertThat(dao.getCount(), is(1));
+
         User user2 = dao.get(user.getEmpNo());
 
         assertThat(user2.getUserName(), is(user.getUserName()));
         assertThat(user2.getEmpNo(), is(user.getEmpNo()));
+
+
+
     }
 }
