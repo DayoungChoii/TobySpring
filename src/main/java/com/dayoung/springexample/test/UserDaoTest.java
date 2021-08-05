@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.sql.SQLException;
 
@@ -17,7 +18,7 @@ import static org.hamcrest.CoreMatchers.is;
 public class UserDaoTest {
 
     @Test
-    public void addAndGet() throws SQLException, ClassNotFoundException{
+    public void addAndGet() throws SQLException{
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         UserDao dao = context.getBean("userDao", UserDao.class);
 
@@ -65,5 +66,16 @@ public class UserDaoTest {
 
         userdao.add(user3);
         assertThat(userdao.getCount(), is(3));
+    }
+
+    @Test(expected = EmptyResultDataAccessException.class)
+    public void getUserFailure() throws SQLException{
+        ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
+
+        UserDao dao = context.getBean("userDao", UserDao.class);
+        dao.deleteAll();
+        assertThat(dao.getCount(), is(0));
+
+        dao.get("unknown_empNo");
     }
 }

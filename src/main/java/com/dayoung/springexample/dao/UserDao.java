@@ -1,6 +1,7 @@
 package com.dayoung.springexample.dao;
 
 import com.dayoung.springexample.bean.User;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -30,7 +31,7 @@ public class UserDao {
 
     }
 
-    public User get(String empNo) throws ClassNotFoundException, SQLException {
+    public User get(String empNo) throws SQLException {
 
         Connection c = dataSource.getConnection();
 
@@ -40,14 +41,21 @@ public class UserDao {
 
 
         ResultSet rs = ps.executeQuery();
-        rs.next();
-        User user = new User();
-        user.setEmpNo(rs.getString("emp_no"));
-        user.setUserName(rs.getString("user_name"));
+        User user = null;
+        if(rs.next()){
+            user = new User();
+            user.setEmpNo(rs.getString("emp_no"));
+            user.setUserName(rs.getString("user_name"));
+        }
+
 
         rs.close();
         ps.close();
         c.close();
+
+        if(user == null){
+            throw new EmptyResultDataAccessException(1);
+        }
 
         return user;
 
