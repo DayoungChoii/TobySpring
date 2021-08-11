@@ -3,6 +3,7 @@ package com.dayoung.springexample.test;
 import com.dayoung.springexample.bean.User;
 import com.dayoung.springexample.dao.UserDao;
 import com.dayoung.springexample.service.DAOFactory;
+import com.dayoung.springexample.service.SimpleConnectionMaker;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,9 +13,12 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.sql.DataSource;
 import java.sql.SQLException;
 
 import static org.junit.Assert.assertThat;
@@ -22,6 +26,7 @@ import static org.hamcrest.CoreMatchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "/applicationContext.xml")
+@DirtiesContext
 public class UserDaoTest {
 
     @Autowired
@@ -39,6 +44,12 @@ public class UserDaoTest {
         user1 = new User( "22222", "김희진");
         user2 = new User("33333", "양희진");
         user3 = new User("44444", "박정아");
+
+        DataSource dataSource = new SingleConnectionDataSource(
+                "jdbc:oracle:thin:@localhost:1521:xe", "devuser", "devuser", true
+        );
+        dao.setDataSource(dataSource);
+
     }
 
 
